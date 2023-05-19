@@ -1,6 +1,7 @@
 {
   "name": "weblab",
-  "version": "1.0.0-build_id-timestamp",
+  "version": "1.0.0",
+  "buildId": "",
   "dependencies": {
     "@atlaskit/button": "^16.7.2",
     "@atlaskit/icon": "^21.12.1",
