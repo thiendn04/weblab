@@ -1,6 +1,6 @@
 {
   "name": "weblab",
-  "version": "1.0.0",
+  "version": "V2",
   "dependencies": {
     "@atlaskit/button": "^16.7.2",
     "@atlaskit/icon": "^21.12.1",
