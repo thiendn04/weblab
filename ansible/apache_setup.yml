@@ -1,0 +1,74 @@
+---
+- name: Update, upgrade, install Apache2, and PHP
+  hosts: appsrvgrp
+  become: yes
+
+  tasks:
+    - name: Update package cache (Ubuntu)
+      apt:
+        update_cache: yes
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Update package cache (CentOS)
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_distribution == 'CentOS'
+
+    - name: Upgrade packages (Ubuntu)
+      apt:
+        upgrade: dist
+        autoremove: yes
+        autoclean: yes
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Upgrade packages (CentOS)
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_distribution == 'CentOS'
+
+    - name: Install Apache2 (Ubuntu)
+      apt:
+        name: apache2
+        state: present
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Install Apache2 (CentOS)
+      yum:
+        name: httpd
+        state: present
+      when: ansible_distribution == 'CentOS'
+
+    - name: Install PHP and required modules (Ubuntu)
+      apt:
+        name: 
+          - php
+          - libapache2-mod-php
+          - php-mysql
+          - php-curl
+          - php-gd
+        state: present
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Install PHP and required modules (CentOS)
+      yum:
+        name: 
+          - php
+          - php-mysql
+          - php-curl
+          - php-gd
+        state: present
+      when: ansible_distribution == 'CentOS'
+
+    - name: Restart Apache service (Ubuntu)
+      service:
+        name: apache2
+        state: restarted
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Restart Apache service (CentOS)
+      service:
+        name: httpd
+        state: restarted
+      when: ansible_distribution == 'CentOS'
