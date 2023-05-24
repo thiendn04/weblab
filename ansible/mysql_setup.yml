@@ -4,21 +4,16 @@
   become: yes
   tasks:
 
-    - name: Download MySQL RPM
-      get_url:
-        url: http://repo.mysql.com/mysql80-community-release-el9-1.noarch.rpm
-        dest: /tmp/mysql80-community-release-el9-1.noarch.rpm
-
-    - name: Install or upgrade MySQL repository package
-      shell: rpm -Uvh /tmp/mysql80-community-release-el9-1.noarch.rpm
+    - name: Install MySQL Software Repo
+      yum:
+        name: http://repo.mysql.com/mysql80-community-release-el9-1.noarch.rpm
+        state: present
 
     - name: Install MySQL Database
-      yum: 
-        name: mysql-server
-        state: present
-        gpgcheck: yes
-        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
-        enabled: yes        
+      yum: name=mysql-server state=present
+      
+    - name: Install MySQL-python
+      yum: name=MySQL-python state=present   
 
     - name: Upgrade all packages
       yum:
@@ -34,7 +29,7 @@
     - shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}';
       register: result
     -  set_fact:
-        mysql_root_pw: "{{ result.stdout }}"
+        mysql_root_pw: "ITP@144BD"
 
     - stat: path=/root/.my.cnf
       register: sym
