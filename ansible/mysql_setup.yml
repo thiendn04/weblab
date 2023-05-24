@@ -36,21 +36,11 @@
     - set_fact: mysql_root_pw="ITP@144BD"
       when: sym.stat.exists == True
 
-    - name: install .my.cnf with credentials
-      template: src=my.cnf.j2 dest=/root/.my.cnf
-                mode=0400
-      tags: my_cnf
-
     - name: Set the root password for MySQL Database
       command:  mysql -u root --connect-expired-password --execute="SET PASSWORD = PASSWORD('ITP@144BD');"
         
     -  set_fact:
         mysql_root_pw: "ITP@144BD"
-
-    - name: install .my.cnf with credentials
-      template: src=my.cnf.j2 dest=/root/.my.cnf
-                mode=0400
-      tags: my_cnf
 
     - name: Create the database for website
       mysql_db: name=test state=present
