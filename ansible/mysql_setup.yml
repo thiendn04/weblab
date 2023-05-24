@@ -7,7 +7,6 @@
       yum:
         name: '*'
         state: latest
-        gpgcheck: no
 
     - name: Install MySQL Software Repo
       yum:
