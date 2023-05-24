@@ -4,9 +4,10 @@
   become: yes
   tasks:
     - name: Upgrade all packages
-      name: '*'
-      state: latest
-      
+      yum:
+        name: '*'
+        state: latest
+
     - name: Install MySQL Software Repo
       yum:
         name: http://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
