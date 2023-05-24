@@ -1,0 +1,54 @@
+---
+- name: MySQL Server Setup
+  hosts: dbsrvgrp
+  become: yes
+  tasks:
+    - name: Update apt cache (Ubuntu)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Install MySQL packages (Ubuntu)
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - mysql-server
+        - python3-mysqldb
+      when: ansible_os_family == 'Debian'
+
+    - name: Install MySQL packages (CentOS)
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - mysql-server
+        - MySQL-python
+      when: ansible_os_family == 'RedHat'
+
+    - name: Start MySQL service (Ubuntu)
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Start MySQL service (CentOS)
+      service:
+        name: mysqld
+        state: started
+        enabled: yes
+      when: ansible_os_family == 'RedHat'
+
+    - name: Configure MySQL root password (Ubuntu)
+      debconf:
+        name: 'mysql-server'
+        question: 'mysql-server/root_password'
+        value: 'ITP@144BD'
+        vtype: 'password'
+        state: 'present'
+      when: ansible_os_family == 'Debian'
+
+    - name: Configure MySQL root password (CentOS)
+      shell: mysqladmin -u root password 'ITP@144BD'
+      when: ansible_os_family == 'RedHat'
