@@ -3,52 +3,53 @@
   hosts: dbsrvgrp
   become: yes
   tasks:
-    - name: Update apt cache (Ubuntu)
-      apt:
-        update_cache: yes
-      when: ansible_os_family == 'Debian'
-
-    - name: Install MySQL packages (Ubuntu)
-      package:
-        name: "{{ item }}"
+    - name: Install MySQL Software Repo
+      yum:
+        name: http://repo.mysql.com/mysql57-community-release-el7-10.noarch.rpm
         state: present
-      loop:
-        - mysql-server
-        - python3-mysqldb
-      when: ansible_os_family == 'Debian'
 
-    - name: Install MySQL packages (CentOS)
-      package:
-        name: "{{ item }}"
+    - name: Install MySQL Database
+      yum: 
+        name: mysql-server
         state: present
-      loop:
-        - mysql-server
-        - MySQL-python
-      when: ansible_os_family == 'RedHat'
 
-    - name: Start MySQL service (Ubuntu)
-      service:
-        name: mysql
-        state: started
-        enabled: yes
-      when: ansible_os_family == 'Debian'
-
-    - name: Start MySQL service (CentOS)
-      service:
+    - name: Start & Enable MySQL Server to start on boot
+      service: 
         name: mysqld
         state: started
         enabled: yes
-      when: ansible_os_family == 'RedHat'
 
-    - name: Configure MySQL root password (Ubuntu)
-      debconf:
-        name: 'mysql-server'
-        question: 'mysql-server/root_password'
-        value: 'ITP@144BD'
-        vtype: 'password'
-        state: 'present'
-      when: ansible_os_family == 'Debian'
+    - shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}';
+      register: result
+    -  set_fact:
+        mysql_root_pw: "{{ result.stdout }}"
 
-    - name: Configure MySQL root password (CentOS)
-      shell: mysqladmin -u root password 'ITP@144BD'
-      when: ansible_os_family == 'RedHat'
+    - stat: path=/root/.my.cnf
+      register: sym
+    - set_fact: mysql_root_pw="ITP@144BD"
+      when: sym.stat.exists == True
+
+    - name: install .my.cnf with credentials
+      template: src=my.cnf.j2 dest=/root/.my.cnf
+                mode=0400
+      tags: my_cnf
+
+    - name: Set the root password for MySQL Database
+      command:  mysql -u root --connect-expired-password --execute="SET PASSWORD = PASSWORD('ITP@144BD');"
+        
+    -  set_fact:
+        mysql_root_pw: "ITP@144BD"
+
+    - name: install .my.cnf with credentials
+      template: src=my.cnf.j2 dest=/root/.my.cnf
+                mode=0400
+      tags: my_cnf
+
+    - name: Create the database for website
+      mysql_db: name=test state=present
+
+    - name: Create the Application user for the database
+      mysql_user: name=admin password=ITP@144BD priv='*.*:ALL' host='%' state=present
+        
+    - name: Enable the firewall port for MySQL
+      firewalld: port=3306/tcp permanent=true state=enabled immediate=yes
