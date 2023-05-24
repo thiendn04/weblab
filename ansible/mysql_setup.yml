@@ -4,10 +4,13 @@
   become: yes
   tasks:
 
-    - name: Install MySQL Software Repo
-      yum:
-        name: http://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
-        state: present
+    - name: Download MySQL RPM
+      get_url:
+        url: http://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+        dest: /tmp/mysql80-community-release-el7-5.noarch.rpm
+
+    - name: Install or upgrade MySQL repository package
+      shell: rpm -Uvh /tmp/mysql80-community-release-el7-5.noarch.rpm
 
     - name: Install MySQL Database
       yum: 
