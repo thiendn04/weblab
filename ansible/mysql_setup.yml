@@ -3,10 +3,6 @@
   hosts: dbsrvgrp
   become: yes
   tasks:
-    - name: Upgrade all packages
-      yum:
-        name: '*'
-        state: latest
 
     - name: Install MySQL Software Repo
       yum:
@@ -17,7 +13,14 @@
       yum: 
         name: mysql-server
         state: present
-        gpgcheck: no
+        gpgcheck: yes
+        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+        enabled: yes        
+
+    - name: Upgrade all packages
+      yum:
+        name: '*'
+        state: latest
 
     - name: Start & Enable MySQL Server to start on boot
       service: 
