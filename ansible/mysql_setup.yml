@@ -15,11 +15,6 @@
     - name: Install MySQL-python
       yum: name=MySQL-python state=present   
 
-    - name: Upgrade all packages
-      yum:
-        name: '*'
-        state: latest
-
     - name: Start & Enable MySQL Server to start on boot
       service: 
         name: mysqld
