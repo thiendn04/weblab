@@ -9,6 +9,15 @@
         name: http://repo.mysql.com/mysql80-community-release-el9-1.noarch.rpm
         state: present
 
+    - name: Update CentOS with skip-broken option
+      yum:
+        name: '*'
+        state: latest
+        skip_broken: yes
+
+    - name: Verify RPM package integrity
+      shell: rpm -Va --nofiles --nodigest
+
     - name: Install MySQL Database
       yum: name=mysql-server state=present
       
