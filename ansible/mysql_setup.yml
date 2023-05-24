@@ -7,6 +7,7 @@
       yum:
         name: '*'
         state: latest
+        gpgcheck: no
 
     - name: Install MySQL Software Repo
       yum:
@@ -17,6 +18,7 @@
       yum: 
         name: mysql-server
         state: present
+        gpgcheck: no
 
     - name: Start & Enable MySQL Server to start on boot
       service: 
