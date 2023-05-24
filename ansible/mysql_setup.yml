@@ -9,7 +9,7 @@
         name: '*'
         state: latest
 
-   - name: Install MySQL Software Repo
+    - name: Install MySQL Software Repo
       yum:
         name: http://repo.mysql.com/mysql80-community-release-el9-1.noarch.rpm
         state: present
