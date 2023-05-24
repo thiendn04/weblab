@@ -6,11 +6,11 @@
 
     - name: Download MySQL RPM
       get_url:
-        url: http://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
-        dest: /tmp/mysql80-community-release-el7-5.noarch.rpm
+        url: http://repo.mysql.com/mysql80-community-release-el9-1.noarch.rpm
+        dest: /tmp/mysql80-community-release-el9-1.noarch.rpm
 
     - name: Install or upgrade MySQL repository package
-      shell: rpm -Uvh /tmp/mysql80-community-release-el7-5.noarch.rpm
+      shell: rpm -Uvh /tmp/mysql80-community-release-el9-1.noarch.rpm
 
     - name: Install MySQL Database
       yum: 
