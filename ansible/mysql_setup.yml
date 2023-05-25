@@ -9,6 +9,16 @@
         name: '*'
         state: latest
 
+    - name: Install pip
+      yum:
+        name:
+          - python3-pip
+
+    - name: Install pexpect
+      pip:
+        name: pexpect
+        state: present
+
     - name: Install MySQL Software Repo
       yum:
         name: http://repo.mysql.com/mysql80-community-release-el7-5.noarch.rpm
@@ -37,8 +47,8 @@
         responses:
           'Enter current password for root (enter for none):': ''
           'Set root password? [Y/n]': 'Y'
-          'New password:': 'YourNewPassword'
-          'Re-enter new password:': 'YourNewPassword'
+          'New password:': 'ITP@144BD'
+          'Re-enter new password:': 'ITP@144BD'
           'Remove anonymous users? [Y/n]': 'Y'
           'Disallow root login remotely? [Y/n]': 'Y'
           'Remove test database and access to it? [Y/n]': 'Y'
