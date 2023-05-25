@@ -26,27 +26,24 @@
         state: started
         enabled: yes
 
-    - shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}';
-      register: result
-    -  set_fact:
-        mysql_root_pw: "ITP@144BD"
+    - name: Get MySQL root password from log
+      command: grep 'password' /var/log/mysqld.log | awk '{print $NF}'
+      changed_when: false
+      register: mysql_root_password
 
-    - stat: path=/root/.my.cnf
-      register: sym
-    - set_fact: mysql_root_pw="ITP@144BD"
-      when: sym.stat.exists == True
-
-    - name: Set the root password for MySQL Database
-      command:  mysql -u root --connect-expired-password --execute="SET PASSWORD = PASSWORD('ITP@144BD');"
-        
-    -  set_fact:
-        mysql_root_pw: "ITP@144BD"
-
-    - name: Create the database for website
-      mysql_db: name=test state=present
-
-    - name: Create the Application user for the database
-      mysql_user: name=admin password=ITP@144BD priv='*.*:ALL' host='%' state=present
+    - name: Run mysql_secure_installation
+      expect:
+        command: mysql_secure_installation
+        responses:
+          'Enter current password for root (enter for none):': "{{ mysql_root_password.stdout }}"
+          'Set root password? [Y/n]': 'Y'
+          'New password:': 'ITP@144BD'
+          'Re-enter new password:': 'ITP@144BD'
+          'Change the password for root ? [Y/n]': 'Y'
+          'Remove anonymous users? [Y/n]': 'Y'
+          'Disallow root login remotely? [Y/n]': 'Y'
+          'Remove test database and access to it? [Y/n]': 'Y'
+          'Reload privilege tables now? [Y/n]': 'Y'
         
     - name: Enable the firewall port for MySQL
       firewalld: port=3306/tcp permanent=true state=enabled immediate=yes		 
