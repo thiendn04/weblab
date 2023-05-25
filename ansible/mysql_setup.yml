@@ -53,7 +53,7 @@
       expect:
         command: mysql_secure_installation
         responses:
-          'Enter password for user root': "mysql_root_pw"
+          'Enter password for user root': "{{ mysql_root_pw }}"
           'New password:': 'ITP@144BD'
           'Re-enter new password:': 'ITP@144BD'
           'Change the password for root ? [Y/n]': 'n'
