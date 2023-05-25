@@ -26,16 +26,16 @@
         state: started
         enabled: yes
 
-    - shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}';
-      register: result
-    -  set_fact:
-        mysql_root_pw: "{{ result.stdout }}"
+    - name: Get MySQL root password from log
+      command: grep 'password' /var/log/mysqld.log | awk '{print $NF}'
+      changed_when: false
+      register: mysql_root_password
 
-    - name: Run mysql_secure_installation for fresh installation
+    - name: Run mysql_secure_installation
       expect:
         command: mysql_secure_installation
         responses:
-          'Enter current password for root (enter for none):': "{{ result.stdout }}"
+          'Enter current password for root (enter for none):': "{{ mysql_root_password.stdout }}"
           'Set root password? [Y/n]': 'Y'
           'New password:': 'ITP@144BD'
           'Re-enter new password:': 'ITP@144BD'
