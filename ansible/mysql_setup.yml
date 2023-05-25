@@ -35,10 +35,11 @@
       expect:
         command: mysql_secure_installation
         responses:
-          'Enter current password for root (enter for none):': ''
+          'Enter current password for root (enter for none):': "{{ result.stdout }}"
           'Set root password? [Y/n]': 'Y'
           'New password:': 'ITP@144BD'
           'Re-enter new password:': 'ITP@144BD'
+          'Change the password for root ? [Y/n]': 'n'
           'Remove anonymous users? [Y/n]': 'Y'
           'Disallow root login remotely? [Y/n]': 'Y'
           'Remove test database and access to it? [Y/n]': 'Y'
