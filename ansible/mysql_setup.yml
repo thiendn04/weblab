@@ -9,6 +9,20 @@
         name: '*'
         state: latest
 
+    - name: Install EPEL repo.
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install python-pip.
+      yum:
+        name: python-pip
+        state: present
+
+    - name: install pexpect
+      pip:
+        name: pexpect        
+
     - name: Install MySQL Software Repo
       yum:
         name: http://repo.mysql.com/mysql80-community-release-el7-5.noarch.rpm
