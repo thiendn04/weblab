@@ -29,4 +29,18 @@
     - shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}';
       register: result
     -  set_fact:
-        mysql_root_pw: "{{ result.stdout }}"		  
+        mysql_root_pw: "{{ result.stdout }}"
+
+    - name: Run mysql_secure_installation
+      expect:
+        command: mysql_secure_installation
+        responses:
+          'Enter current password for root (enter for none):': "{{ result.stdout }}"
+          'Set root password? [Y/n]': 'Y'
+          'New password:': 'ITP@144BD'
+          'Re-enter new password:': 'ITP@144BD'
+		  'Change the password for root ? [Y/n]': 'Y'
+          'Remove anonymous users? [Y/n]': 'Y'
+          'Disallow root login remotely? [Y/n]': 'Y'
+          'Remove test database and access to it? [Y/n]': 'Y'
+          'Reload privilege tables now? [Y/n]': 'Y'    		  
