@@ -34,17 +34,17 @@
     - name: Install MySQL-python
       yum: name=MySQL-python state=present   
 
-    - name: Start & Enable MySQL Server to start on boot
+    - name: Start & Enable MySQL Server to start on boot !
       service: 
         name: mysqld
         state: started
         enabled: yes
 
-    - name: Extract MySQL root password from log file
+    - name: Extract MySQL root password from log file !
       shell: grep 'password' /var/log/mysqld.log | awk '{print $NF}'
       register: mysql_password
 
-    - name: Configure MySQL with extracted password
+    - name: Configure MySQL with extracted password !
       expect:
         command: mysql_secure_installation
         responses:
