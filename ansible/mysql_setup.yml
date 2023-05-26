@@ -3,6 +3,7 @@
   hosts: dbsrvgrp
   become: yes
   vars:
+    mysql_root_user: root
     mysql_root_password: Thien@8888
   tasks:
 
@@ -42,10 +43,18 @@
         state: started
         enabled: yes
 
-    - name: Thay đổi mật khẩu root MySQL
-      mysql_user:
-        name: root
-        password: "{{ mysql_root_password }}"
-        host: localhost
-        login_unix_socket: /var/run/mysqld/mysqld.sock        
+    - name: Get MySQL temporary root password from log
+      shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'
+      changed_when: false
+      register: mysql_temp_pw
+
+    - name: Set MySQL root password as a fact
+      set_fact:
+        mysql_root_pw: "{{ mysql_temp_pw.stdout }}"
+
+    - name: Change root password using expect
+      expect:
+        command: mysqladmin -u {{ mysql_root_user }} password "{{ mysql_root_pw }}"
+        responses:
+          Enter password: "{{ mysql_root_password }}"           
 
