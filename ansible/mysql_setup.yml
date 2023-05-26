@@ -40,20 +40,16 @@
         state: started
         enabled: yes
 
-    - name: Get MySQL temporary root password from log
-      shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'
-      changed_when: false
-      register: mysql_temp_pw
+    - name: Extract MySQL root password from log file
+      shell: grep 'password' /var/log/mysqld.log | awk '{print $NF}'
+      register: mysql_password
 
-    - name: Set MySQL root password as a fact
-      set_fact:
-        mysql_root_pw: "{{ mysql_temp_pw.stdout }}"
-
-    - name: Run mysql_secure_installation
+    - name: Configure MySQL with extracted password
       expect:
         command: mysql_secure_installation
         responses:
-          'Enter password for user root': "{{ mysql_root_pw }}"
+          'Enter current password for root (enter for none):': '{{ mysql_password.stdout }}'
+          'Set root password? [Y/n]': 'Y'
           'New password:': 'ITP@144BD'
           'Re-enter new password:': 'ITP@144BD'
           'Change the password for root ? [Y/n]': 'n'
