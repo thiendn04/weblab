@@ -2,6 +2,8 @@
 - name: MySQL Server Setup
   hosts: dbsrvgrp
   become: yes
+  vars:
+    mysql_root_password: Thien@8888
   tasks:
 
     - name: Update all packages
@@ -40,25 +42,10 @@
         state: started
         enabled: yes
 
-    - name: Get MySQL temporary root password from log
-      shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'
-      changed_when: false
-      register: mysql_temp_pw
-
-    - name: Set MySQL root password as a fact
-      set_fact:
-        mysql_root_pw: "{{ mysql_temp_pw.stdout }}"
-
-    - name: Run mysql_secure_installation
-      expect:
-        command: mysql_secure_installation
-        responses:
-          'Enter password for user root:': "{{ mysql_root_pw }}"
-          'New password:': 'Khoi@8888'
-          'Re-enter new password:': 'Khoi@8888'
-          'Change the password for root ? (Press y|Y for Yes, any other key for No) :' : 'N'
-          'Remove anonymous users? (Press y|Y for Yes, any other key for No) :' : 'Y'
-          'Disallow root login remotely? (Press y|Y for Yes, any other key for No) :' : 'Y'
-          'Remove test database and access to it? (Press y|Y for Yes, any other key for No) :' : 'Y'
-          'Reload privilege tables now? (Press y|Y for Yes, any other key for No) :' : 'Y'          
+    - name: Thay đổi mật khẩu root MySQL
+      mysql_user:
+        name: root
+        password: "{{ mysql_root_password }}"
+        host: localhost
+        login_unix_socket: /var/run/mysqld/mysqld.sock        
 
