@@ -54,8 +54,8 @@
         command: mysql_secure_installation
         responses:
           'Enter current password for root (enter for none):': "{{ mysql_root_pw }}"
-          'New password:': 'ITP@144BD'
-          'Re-enter new password:': 'ITP@144BD'
+          'New password:': 'Cntt@8888'
+          'Re-enter new password:': 'Cntt@8888'
 		      'Change the password for root ? [Y/n]': 'n'
           'Remove anonymous users? [Y/n]': 'Y'
           'Disallow root login remotely? [Y/n]': 'Y'
