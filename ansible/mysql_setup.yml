@@ -56,9 +56,9 @@
           'Enter password for user root:': "{{ mysql_root_pw }}"
           'New password:': 'Khoi@8888'
           'Re-enter new password:': 'Khoi@8888'
-          'Change the password for root ? [Y/n]' : 'n'
-          'Remove anonymous users? [Y/n]' : 'Y'
-          'Disallow root login remotely? [Y/n]' : 'Y'
-          'Remove test database and access to it? [Y/n]' : 'Y'
-          'Reload privilege tables now? [Y/n]' : 'Y'          
+          'Change the password for root ? [Y/n]' : "n"
+          'Remove anonymous users? [Y/n]' : "Y"
+          'Disallow root login remotely? [Y/n]' : "Y"
+          'Remove test database and access to it? [Y/n]' : "Y"
+          'Reload privilege tables now? [Y/n]' : "Y"          
 
