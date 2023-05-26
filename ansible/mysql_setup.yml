@@ -49,7 +49,15 @@
       set_fact:
         mysql_root_pw: "{{ mysql_temp_pw.stdout }}"
 
-    - name: Print pass temp
-      debug:
-        msg:
-          - "Pass work temps là: {{ mysql_root_pw }}"
+    - name: Run mysql_secure_installation
+      expect:
+        command: mysql_secure_installation
+        responses:
+          'Enter current password for root (enter for none):': "{{ mysql_root_pw }}"
+          'New password:': 'Khoi@8888'
+          'Re-enter new password:': 'Khoi@8888'
+          'Change the password for root ? [Y/n]': 'n'
+          'Remove anonymous users? [Y/n]': 'Y'
+          'Disallow root login remotely? [Y/n]': 'Y'
+          'Remove test database and access to it? [Y/n]': 'Y'
+          'Reload privilege tables now? [Y/n]': 'Y'
