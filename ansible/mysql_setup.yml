@@ -2,9 +2,6 @@
 - name: MySQL Server Setup
   hosts: dbsrvgrp
   become: yes
-  vars:
-    mysql_root_user: root
-    mysql_root_password: Thien@8888
   tasks:
 
     - name: Update all packages
@@ -52,9 +49,15 @@
       set_fact:
         mysql_root_pw: "{{ mysql_temp_pw.stdout }}"
 
-    - name: Change root password using expect
+    - name: Run mysql_secure_installation
       expect:
-        command: mysqladmin -u {{ mysql_root_user }} password "{{ mysql_root_pw }}"
+        command: mysql_secure_installation
         responses:
-          Enter password: "{{ mysql_root_password }}"           
+          'Enter password for user root:': "{{ mysql_root_pw }}"
+          'New password:': 'Khoi@8888'
+          'Re-enter new password:': 'Khoi@8888'
+          'Remove anonymous users? (Press y|Y for Yes, any other key for No) :' : 'Y'
+          'Disallow root login remotely? (Press y|Y for Yes, any other key for No) :' : 'Y'
+          'Remove test database and access to it? (Press y|Y for Yes, any other key for No) :' : 'Y'
+          'Reload privilege tables now? (Press y|Y for Yes, any other key for No) :' : 'Y'           
 
