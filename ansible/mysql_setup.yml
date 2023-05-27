@@ -8,6 +8,8 @@
 
     - name: Removes anonymous user account for localhost
       mysql_user:
+        login_user: root
+        login_password: "{{ mysql_root_pass }}"
         name: ''
         host: localhost
         state: absent
