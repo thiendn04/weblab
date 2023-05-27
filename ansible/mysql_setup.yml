@@ -6,10 +6,15 @@
     mysql_root_password: Khoi@8888
   tasks:
 
+    - name: copy my.cnf
+      copy:
+        src: ../files/etc/my.cnf
+        dest: /etc/my.cnf
+        mode: 0644
+
     - name: Remove anonymous user accounts
       mysql_user:
         name: ''
-        host_all: true
-        login_user: root
-        login_password: "{{ mysql_root_password }}"
+        host: localhost
         state: absent
+        login_unix_socket: /run/mysqld/mysqld.sock
