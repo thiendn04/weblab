@@ -7,12 +7,12 @@
   tasks:
 
     - name: Remove anonymous user accounts
-        mysql_user:
-          name: ''
-          host: localhost
-          login_user: root
-          login_password: "{{ mysql_root_password }}"
-          state: absent
-          append_privs: no
-          check_implicit_admin: yes
-          ignore_errors: yes
+      mysql_user:
+        name: ''
+        host: localhost
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+        state: absent
+        append_privs: no
+        check_implicit_admin: yes
+        ignore_errors: yes
