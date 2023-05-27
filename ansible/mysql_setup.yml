@@ -9,10 +9,7 @@
     - name: Remove anonymous user accounts
       mysql_user:
         name: ''
-        host: localhost
+        host_all: true
         login_user: root
         login_password: "{{ mysql_root_password }}"
         state: absent
-        append_privs: no
-        check_implicit_admin: yes
-        ignore_errors: yes
