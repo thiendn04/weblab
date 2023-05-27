@@ -6,6 +6,49 @@
     mysql_root_password: Khoi@8888
   tasks:
 
+    - name: Update all packages
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install EPEL repo.
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install python-pip.
+      yum:
+        name: python-pip
+        state: present
+
+    - name: install pexpect
+      pip:
+        name: pexpect        
+
+    - name: Install MySQL Software Repo
+      yum:
+        name: http://repo.mysql.com/mysql80-community-release-el7-5.noarch.rpm
+        state: present
+
+    - name: Install MySQL Database
+      yum: name=mysql-server state=present
+      
+    - name: Install MySQL-python
+      yum: name=MySQL-python state=present   
+
+    - name: Start & Enable MySQL Server to start on boot !
+      service: 
+        name: mysqld
+        state: started
+        enabled: yes
+
+    - name: get root password
+      shell: "grep 'A temporary password is generated for root@localhost' /var/log/mysqld.log | awk -F ' ' '{print $(NF)}'"
+      register: root_password
+
+    - name: update expired root user password
+      command: mysql --user root --password={{ root_password.stdout }} --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_password }}';"
+
     - name: Run mysql_secure_installation
       command: mysql --user root --password={{ mysql_root_password }} --execute="{{ item }};"
       with_items:
