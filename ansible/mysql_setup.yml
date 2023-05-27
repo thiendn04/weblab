@@ -3,7 +3,8 @@
   hosts: dbsrvgrp
   become: yes
   vars:
-    mysql_pass: Khoi@8888
+    mysql_root_pw: Khoi@8888
+    mysql_pass: Thien@9999
   tasks:
 
     - name: Update all packages
@@ -41,15 +42,6 @@
         name: mysqld
         state: started
         enabled: yes
-
-    - name: Get MySQL temporary root password from log
-      shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'
-      changed_when: false
-      register: mysql_temp_pw
-
-    - name: Set MySQL root password as a fact
-      set_fact:
-        mysql_root_pw: "{{ mysql_temp_pw.stdout }}"
 
     - name: Set MySQL root Password
       mysql_user:
