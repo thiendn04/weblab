@@ -3,8 +3,7 @@
   hosts: dbsrvgrp
   become: yes
   vars:
-    mysql_root_pw: Khoi@8888
-    mysql_pass: Thien@9999
+    mysql.root.password: Khoi@8888
   tasks:
 
     - name: Update all packages
@@ -43,12 +42,9 @@
         state: started
         enabled: yes
 
-    - name: Set MySQL root Password
-      mysql_user:
-        login_host: 'localhost'
-        login_user: 'root'
-        login_password: '{{ mysql_root_pw }}'
-        name: 'root'
-        password: '{{ mysql_pass }}'
-        state: present         
+    - name: get root password
+      shell: "grep 'A temporary password is generated for root@localhost' /var/log/mysqld.log | awk -F ' ' '{print $(NF)}'"
+      register: root_password
+    - name: update expired root user password
+      command: mysql --user root --password={{ root_password.stdout }} --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql.root.password }}';"     
 
