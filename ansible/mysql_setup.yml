@@ -6,14 +6,8 @@
     mysql_root_password: Khoi@8888
   tasks:
 
-    - name: Reload privilege tables
-      command: 'mysql -ne "{{ item }}"'
-      with_items:
-        - FLUSH PRIVILEGES
-      changed_when: False
-
     - name: Remove anonymous users
-      command: 'mysql -ne "{{ item }}"'
+      command: mysql --user root --password={{ mysql_root_password }} --execute="{{ item }};"
       with_items:
         - DELETE FROM mysql.user WHERE User=''
       changed_when: False    
