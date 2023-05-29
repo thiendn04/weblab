@@ -43,11 +43,12 @@
         state: enabled
         policy: allow
 
-    - name: "UFW firewall allow HTTP on port {{ http_port }}"
+    - name: "UFW firewall allow port"
       ufw:
         rule: allow
-        port: "{{ http_port }}"
+        port: "{{ item }}"
         proto: tcp
+      loop:  "{{ http_port }}" 
  
   handlers:
     - name: restart-apache
