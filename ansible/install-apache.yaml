@@ -62,6 +62,10 @@
         proto: tcp
       loop:  "{{ ufw_port }}" 
 
+    - name: Add php repository
+      apt_repository:
+      repo: 'ppa:ondrej/php'
+
     - name: Install PHP and required modules
       apt:
         name: 
