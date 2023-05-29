@@ -1,4 +1,7 @@
 mysql_root_password:  Khoi@8888
 http_host:  weblab.local
 http_conf:  weblab.local.conf
-http_port:  "80"
+
+http_port:
+-  "80"
+-  "22"

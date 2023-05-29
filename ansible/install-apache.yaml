@@ -2,6 +2,17 @@
   hosts: stagingsrvgrp
   become: yes
   tasks:
+
+    - name: Update package cache (Ubuntu)
+      apt:
+        update_cache: yes
+
+    - name: Upgrade packages (Ubuntu)
+      apt:
+        upgrade: dist
+        autoremove: yes
+        autoclean: yes
+
     - name: Install latest version of Apache
       apt: name=apache2 update_cache=yes state=latest
  
@@ -26,7 +37,12 @@
     - name: Enable site
       command: a2ensite {{ http_conf }}
       notify: restart-apache
- 
+
+    - name: Allow everything and enable UFW
+      ufw:
+        state: enabled
+        policy: allow
+
     - name: "UFW firewall allow HTTP on port {{ http_port }}"
       ufw:
         rule: allow
