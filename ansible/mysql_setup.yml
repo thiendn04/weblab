@@ -57,4 +57,10 @@
         - DROP DATABASE IF EXISTS test
         - DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'
         - FLUSH PRIVILEGES
-      changed_when: False    
+      changed_when: False
+    - name: Add port 3306 into firewall
+      firewalld:
+        port: 3306/tcp
+        permanent: yes
+        state: enabled
+        immediate: yes    
