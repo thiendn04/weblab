@@ -62,15 +62,13 @@
         proto: tcp
       loop:  "{{ ufw_port }}" 
 
-    - name: Installing Remi Repository
-      apt:
-        name: https://rpms.remirepo.net/enterprise/remi-release-7.rpm
-        state: present
-
+    - name: Add php repository
+      apt_repository:
+        repo: 'ppa:ondrej/php'
+        
     - name: Install PHP and required modules
       apt:
-        enablerepo: "remi,remi-php81"
-        name: 
+         name: 
           - php
           - php-fpm
           - libapache2-mod-php
