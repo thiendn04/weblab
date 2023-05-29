@@ -2,8 +2,7 @@
 - name: MySQL Server Setup
   hosts: dbsrvgrp
   become: yes
-  vars:
-    mysql_root_password: Khoi@8888
+
   tasks:
 
     - name: Update all packages
