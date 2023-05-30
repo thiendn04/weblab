@@ -15,10 +15,10 @@
         mode: '0440'
 
     - name: Unzip file Phpmyadmin.zip and delele file zip
-      unzip:
+      unarchive:
         src: /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages.zip
         dest: /var/www/html/phpmyadmin/
-        recurse: yes
+        remote_src: yes
         delete_archive: yes
 
     - name: Move file and rename file configure
