@@ -19,7 +19,7 @@
         name:
           - unzip
           - tar
-        state: 
+        state: present
         
     - name: Set permissions on extracted files
       file:
