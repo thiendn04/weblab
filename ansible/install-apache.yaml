@@ -29,11 +29,8 @@
         validate_certs: true
         extra_opts: "--mode=0755"
 
-    - name: Set permissions on extracted files
-      file:
-        path: /var/www/html/phpmyadmin
-        recurse: yes
-        file_mode: "0755"
+    - name: Set permissions folder phpmyadmin
+      command:  chmod -R 777 /var/www/html/phpmyadmin/
 
     - name: Move file
       file:
