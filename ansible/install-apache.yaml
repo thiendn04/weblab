@@ -16,7 +16,7 @@
         validate_certs: no
 
     - name: Move file
-      command:  mv /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages/* /var/www/html/phpmyadmin
+      shell:  mv /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages/* /var/www/html/phpmyadmin
 
     - name: Rename File 
-      command:  mv /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
+      shell:  mv /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
