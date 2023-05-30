@@ -15,5 +15,5 @@
     - name: Search and edit file config.inc.php
       replace:
         path: /var/www/html/phpmyadmin/config.inc.php
-        regexp: "$cfg['Servers'][$i]['host'] = 'localhost';"
-        replace: "$cfg['Servers'][$i]['host'] = '192.168.254.134';"
+        regexp: 'localhost'
+        replace: '192.168.254.134'
