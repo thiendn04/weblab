@@ -22,7 +22,7 @@
         state: present
         
     - name: Set permissions folder phpmyadmin
-      command:  chmod -R 777 /var/www/html/phpmyadmin/
+      command:  chmod -R 755 /var/www/html/phpmyadmin/
 
     - name: extract archive
       unarchive:
@@ -31,6 +31,13 @@
         remote_src: true
         validate_certs: true
         extra_opts: "--mode=0755"
+
+    - name: Change file ownership, group and permissions
+      ansible.builtin.file:
+        path: /var/www/html/phpmyadmin/
+        owner: root
+        group: root
+        mode: '0755'
 
     - name: Move file
       file:
