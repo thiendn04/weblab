@@ -144,9 +144,9 @@
     - name: Move file
       shell:  mv /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages/* /var/www/html/phpmyadmin
 
-    - name: Rename File
-      shell:  mv /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
-	  
+    - name: Rename file
+      shell: mv /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
+      
     - name: Set up phpmyadmin directory.
       template:
         src: "files/directory.conf"
