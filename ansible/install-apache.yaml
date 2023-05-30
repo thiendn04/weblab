@@ -3,7 +3,8 @@
   become: yes
   tasks:
 
-    - name: Set up phpmyadmin directory
-      template:
-        src: "files/directory.conf"
-        dest: "/etc/apache2/sites-enabled/directory.conf"
+    - name: Search and edit file config.inc.php
+      lineinfile:
+        path: /var/www/html/phpmyadmin/config.inc.php
+        regexp: "$cfg['Servers'][$i]['host'] = 'localhost';"
+        line: "$cfg['Servers'][$i]['host'] = '192.168.254.134';"
