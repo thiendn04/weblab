@@ -147,7 +147,7 @@
     - name: Rename File
       shell:  mv /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
 	  
-    - name: Set up phpmyadmin directory
+    - name: Set up phpmyadmin directory.
       template:
         src: "files/directory.conf"
         dest: "/etc/apache2/sites-enabled/directory.conf"
