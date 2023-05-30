@@ -14,7 +14,7 @@
         dest: /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages.zip
         mode: '0440'
 
-    - name: Unzip file Phpmyadmin.zip and delele 
+    - name: Unzip file Phpmyadmin.zip and delele file zip
       unzip:
         src: /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages.zip
         dest: /var/www/html/phpmyadmin/
