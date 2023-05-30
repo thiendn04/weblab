@@ -3,20 +3,7 @@
   become: yes
   tasks:
 
-    - name: Creat directory phpmyadmin
-      file:
-        path: /var/www/html/phpmyadmin
-        state: directory
-
-    - name: Download and extract archive
-      unarchive:
-        src: https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip
-        dest: /var/www/html/phpmyadmin/
-        remote_src: true
-        validate_certs: no
-
-    - name: Move file
-      shell:  mv /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages/* /var/www/html/phpmyadmin
-
-    - name: Rename File 
-      shell:  mv /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
+    - name: Set up phpmyadmin directory
+      template:
+        src: "files/directory.conf"
+        dest: "/etc/apache2/sites-enabled/directory.conf"
