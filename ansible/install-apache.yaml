@@ -34,11 +34,11 @@
         src: "files/apache-template.conf"
         dest: "/etc/apache2/sites-available/{{ http_conf }}"
 
-#    - name: Disable default Apache website
- #     command: a2dissite 000-default.conf
+    - name: Disable default Apache website
+      command: a2dissite 000-default.conf
 
- #   - name: Delete 000-default.conf
-  #    shell: rm -rf /etc/apache2/sites-available/000-default.conf
+    - name: Delete 000-default.conf
+      shell: rm -rf /etc/apache2/sites-available/000-default.conf
 
     - name: Enable site
       command: a2ensite {{ http_conf }}
@@ -120,6 +120,6 @@
 
     - name: restart-apache
       service:
-        name: restart_php-fpm
+        name: php-fpm
         state: restarted
     
