@@ -11,9 +11,9 @@
       apt:
         name: python3-regex
         state: present
-        
+
     - name: Search and edit file config.inc.php
-      lineinfile:
+      replace:
         path: /var/www/html/phpmyadmin/config.inc.php
         regexp: "$cfg['Servers'][$i]['host'] = 'localhost';"
         replace: "$cfg['Servers'][$i]['host'] = '192.168.254.134';"
