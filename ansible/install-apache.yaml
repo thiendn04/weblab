@@ -3,6 +3,11 @@
   become: yes
   tasks:
 
+    - name: Creat directory phpmyadmin
+      file:
+        path: /var/www/html/phpmyadmin
+        state: link
+
     - name: extract archive
       unarchive:
         src: https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip
