@@ -20,3 +20,4 @@
         - unzip /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages.zip
         - mv /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages/* /var/www/html/phpmyadmin/
         - mv /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
+      changed_when: False
