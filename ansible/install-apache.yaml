@@ -21,9 +21,6 @@
           - tar
         state: present
         
-    - name: Set permissions folder phpmyadmin
-      command:  chmod -R 755 /var/www/html/phpmyadmin/
-
     - name: extract archive
       unarchive:
         src: /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages.zip
