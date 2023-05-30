@@ -104,8 +104,8 @@
     - name: Install unzip
       apt: 
         name: 
-		  -  unzip
-		  -  tar
+		      -  unzip
+		      -  tar
         state: latest
 
     - name: Download php-composer
@@ -151,9 +151,9 @@
       template:
         src: "files/directory.conf"
         dest: "/etc/apache2/sites-enabled/directory.conf"
-	  notify: 
-	    -  restart-apache
-		  -  restart_php-fpm
+      notify: 
+        -  restart-apache
+        -  restart_php-fpm
 
     - name: Update apt cache
       apt:
