@@ -88,7 +88,7 @@
         state: present
 
     - name: Enable PHP-FPM with Apache
-      command: {{ item }}
+      command: "{{ item }}"
       with_items:
         - a2enmod proxy_fcgi setenvif
         - a2enconf php8.1-fpm
