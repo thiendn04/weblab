@@ -3,6 +3,15 @@
   become: yes
   tasks:
 
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install python3-regex package
+      apt:
+        name: python3-regex
+        state: present
+        
     - name: Search and edit file config.inc.php
       lineinfile:
         path: /var/www/html/phpmyadmin/config.inc.php
