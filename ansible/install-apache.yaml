@@ -21,12 +21,6 @@
           - tar
         state: present
         
-    - name: Set permissions on extracted files
-      file:
-        path: /var/www/html/phpmyadmin
-        recurse: yes
-        file_mode: "0755"
-
     - name: extract archive
       unarchive:
         src: /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages.zip
@@ -34,6 +28,12 @@
         remote_src: true
         validate_certs: true
         extra_opts: "--mode=0755"
+
+    - name: Set permissions on extracted files
+      file:
+        path: /var/www/html/phpmyadmin
+        recurse: yes
+        file_mode: "0755"
 
     - name: Move file
       file:
