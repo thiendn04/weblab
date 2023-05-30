@@ -5,5 +5,7 @@
 
     - name: extract archive
       unarchive:
-        src: var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages.zip
+        src: https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.zip
         dest: /var/www/html/phpmyadmin/
+        remote_src: true
+        validate_certs: no
