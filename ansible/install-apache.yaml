@@ -14,12 +14,12 @@
       file:
         src: /var/www/html/phpmyadmin/phpMyAdmin-5.2.1-all-languages/*
         dest: /var/www/html/phpmyadmin/
-        state: link
+        state: directory
         force: yes
 
     - name: Rename File 
       file:
         src: /var/www/html/phpmyadmin/config.sample.inc.php
         dest: /var/www/html/phpmyadmin/config.inc.php
-        state: link
+        state: directory
         force: yes
