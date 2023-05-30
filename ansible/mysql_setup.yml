@@ -35,7 +35,7 @@
     - name: Install MySQL-python
       yum: name=MySQL-python state=present   
 
-    - name: Start & Enable MySQL Server to start on boot !
+    - name: Start & Enable MySQL Server to start on boot
       service: 
         name: mysqld
         state: started
