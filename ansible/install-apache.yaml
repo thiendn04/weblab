@@ -34,11 +34,6 @@
         group: www-data
         mode: '0755'
  
-    - name: Copy your index file
-      template:
-        src: "files/index-template.html"
-        dest: "/var/www/{{ http_host }}/index.html"
- 
     - name: Set up virtuahHost
       template:
         src: "files/apache-template.conf"
