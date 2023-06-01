@@ -19,6 +19,16 @@
       tags:
         - deploy
 
+    - name: Stop Apache
+      service:
+        name: "{{item}}"
+        state: stopped
+      loop:
+        - apache2
+        - php8.1-fpm
+      tags:
+        - deploy
+
     - name: Try Backup and Deploy
       block:
       - name: Archive ROOT dir with timestamp
@@ -64,18 +74,20 @@
       rescue:
        - name: Start Apache2 php8.1-fpm
          service:
-          name: 
-		        -  apache2
-            -  php8.1-fpm
-          state: started
+           name: "{{item}}" 
+           state: started
+         loop:
+           - apache2
+           - php8.1-fpm
 
     - name: Start Apache2 php8.1-fpm
       service:
-        name: 
-		      -  apache2
-		      -  php8.1-fpm		  
+        name: "{{item}}"		  
         state: started
       when: deploy_info.changed
+      loop:
+        - apache2
+        - php8.1-fpm
       tags:
         - deploy
 
