@@ -21,9 +21,9 @@
 
     - name: Stop Apache
       service:
-        name: 
-		      -  apache2
-		      -  php8.1-fpm
+        name:
+          - apache2
+          - php8.1-fpm
         state: stopped
       tags:
         - deploy
