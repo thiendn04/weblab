@@ -19,14 +19,14 @@
       tags:
         - deploy
 
-    - name: Stop Apache
+    - name: Stop apache
       service:
         name:
           - apache2
           - php8.1-fpm
         state: stopped
       tags:
-        - deploy
+       - deploy
 
     - name: Try Backup and Deploy
       block:
