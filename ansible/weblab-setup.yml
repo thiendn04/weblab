@@ -17,16 +17,16 @@
         path: /var/www/weblab.local/ROOT
       register: artifact_stat
       tags:
-       - deploy
+        - deploy
 
     - name: Stop Apache
       service:
         name: 
-		  -  apache2
-		  -  php8.1-fpm
+		      -  apache2
+		      -  php8.1-fpm
         state: stopped
       tags:
-       - deploy
+        - deploy
 
     - name: Try Backup and Deploy
       block:
@@ -37,7 +37,7 @@
         when: artifact_stat.stat.exists
         register: archive_info
         tags:
-         - deploy
+          - deploy
 
       - name: copy ROOT dir with old_ROOT name
         shell: cp -r ROOT old_ROOT
@@ -50,10 +50,10 @@
           state: absent
         when: archive_info.changed
         loop:
-         - /var/www/weblab.local/ROOT
-         - /var/www/weblab.local/ROOT.tgz
+          - /var/www/weblab.local/ROOT
+          - /var/www/weblab.local/ROOT.tgz
         tags:
-         - deploy
+          - deploy
 
       - name: Try deploy artifact else restore from previos old_ROOT
         block:
@@ -74,19 +74,19 @@
        - name: Start Apache2 php8.1-fpm
          service:
           name: 
-		    -  apache2
-		    -  php8.1-fpm
+		        -  apache2
+            -  php8.1-fpm
           state: started
 
     - name: Start Apache2 php8.1-fpm
       service:
         name: 
-		  -  apache2
-		  -  php8.1-fpm		  
+		      -  apache2
+		      -  php8.1-fpm		  
         state: started
       when: deploy_info.changed
       tags:
-       - deploy
+        - deploy
 
     - name: Wait until ROOT.tgz is extracted to ROOT directory
       wait_for:
