@@ -2,7 +2,7 @@
   "name": "weblab",
   "version": "${env.BUILD_ID}-${timestamps}",
   "buildId": "",
-  "timestamps": "'date +%y%m%d-%H%M'",
+  "timestamps": "date +%y%m%d-%H%M",
   "dependencies": {
     "@atlaskit/button": "^16.7.2",
     "@atlaskit/icon": "^21.12.1",
