@@ -101,12 +101,10 @@
       shell: mv /var/www/weblab.local/package /var/www/weblab.local/public_html
 
     - name: Install Nodejs and Run Build package
-      shell: "{{items}}"
-        chdir: /var/www/weblab.local/public_html
-      with_items:
+      command: 
         - npm install --force
         - npm run build
-
+        chdir: /var/www/weblab.local/public_html
 
   handlers:
    - name: Restart Apache2
