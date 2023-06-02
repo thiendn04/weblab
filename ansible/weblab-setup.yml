@@ -92,10 +92,13 @@
         - deploy
 
     - name: Extract public_html.tgz
-      shell: tar -xvf /var/www/weblab.local/public_html.tgz
+      unarchive:
+        src: /var/www/weblab.local/public_html.tgz
+        dest: /var/www/weblab.local
+        remote_src: yes
 
-    - name: Rename file package
-      shell: mv /var/www/weblab.local/package /var/www/weblab.local/public_html
+#    - name: Rename file package
+#      shell: mv /var/www/weblab.local/package /var/www/weblab.local/public_html
 
   handlers:
    - name: Restart Apache2
