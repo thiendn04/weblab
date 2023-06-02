@@ -99,8 +99,15 @@
 
     - name: Rename file package
       shell: mv /var/www/weblab.local/package /var/www/weblab.local/public_html
+    
+    - name: Setup NVM and Nodejs
+      command: "{{item}}"
+      with_items:
+        - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+        - source ~/.bashrc
+        - nvm install v18.16.0 -y
 
-    - name: Install Nodejs
+    - name: npm install
       shell: npm install --force
       args:
         chdir: /var/www/weblab.local/public_html
