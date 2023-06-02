@@ -115,8 +115,7 @@
         executable: /bin/bash
 
     - name: Install Node.js using NVM
-      shell: nvm install node
-      become: true
+      shell: nvm install v18.16.0
       args:
         executable: /bin/bash
 
