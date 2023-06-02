@@ -101,7 +101,8 @@
       shell: mv /var/www/weblab.local/package /var/www/weblab.local/public_html
 
     - name: Install Nodejs and Run Build package
-      command: "{{items}}"
+      command:
+        cmd: "{{items}}"
         chdir: /var/www/weblab.local/public_html
       with_items:
         - npm install --force
