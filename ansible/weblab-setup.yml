@@ -100,7 +100,7 @@
     - name: Rename file package
       shell: mv /var/www/weblab.local/package /var/www/weblab.local/public_html
 
-    - name: Install Nodejs and Run Build package
+    - name: Install Nodejs
       command: npm install --force
         chdir: /var/www/weblab.local/public_html
 
