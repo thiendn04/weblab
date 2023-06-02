@@ -2,6 +2,7 @@
 - name: Setup Apache2 & Deploy Artifact
   hosts: stagingsrvgrp
   become: yes
+  sudo: yes
   tasks:
 
     - name: Install nvm
