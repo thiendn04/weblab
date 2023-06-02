@@ -33,7 +33,17 @@
         owner: www-data
         group: www-data
         mode: '0755'
- 
+
+    - name: Creat directory BK
+      file:
+        path: "/var/www/{{ http_host }}/BK"
+        state: directory
+
+    - name: Creat directory public_html
+      file:
+        path: "/var/www/{{ http_host }}/public_html"
+        state: directory    
+
     - name: Set up virtuahHost
       template:
         src: "files/apache-template.conf"
