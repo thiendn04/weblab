@@ -100,6 +100,14 @@
     - name: Rename file package
       shell: mv /var/www/weblab.local/package /var/www/weblab.local/public_html
 
+    - name: Install Nodejs and Run Build package
+      command: "{{items}}"
+        chdir: /var/www/weblab.local/public_html
+      with_items:
+        - npm install --force
+        - npm run build
+
+
   handlers:
    - name: Restart Apache2
      service:
