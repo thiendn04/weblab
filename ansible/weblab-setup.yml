@@ -107,20 +107,29 @@
           - wget
         state: present
 
-    - name: Download and install NVM
-      shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+    - name: Install nvm
+      shell: >
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
       args:
         executable: /bin/bash
+        chdir: "$HOME"
+        creates: "$HOME/.nvm/nvm.sh"
 
-    - name: Load NVM into current shell session
-      shell: source ~/.bashrc
-      args:
-        executable: /bin/bash
+    - name: Setup .profile
+      lineinfile:
+        path: ~/.profile
+        line: source ~/.nvm/nvm.sh
+        create: yes
 
-    - name: Install Node.js using NVM
-      shell: nvm install v18.16.0
+    - name: Install node
+      shell: |
+        nvm install {{item}}
       args:
         executable: /bin/bash
+        chdir: "$HOME"
+        creates: "$HOME/.nvm/versions/node/v{{item}}"
+      loop:
+        - 18.16.0
 
     - name: npm install
       shell: npm install --force
