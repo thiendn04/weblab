@@ -101,11 +101,13 @@
       shell: mv /var/www/weblab.local/package /var/www/weblab.local/public_html
 
     - name: Install Nodejs
-      command: npm install --force
+      shell: npm install --force
+      args:
         chdir: /var/www/weblab.local/public_html
 
     - name: Run Build package
-      command: npm run build
+      shell: npm run build
+      args:
         chdir: /var/www/weblab.local/public_html
 
   handlers:
