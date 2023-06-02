@@ -97,17 +97,28 @@
         dest: /var/www/weblab.local
         remote_src: yes
 
-    - name: Rename file package
-      shell: mv /var/www/weblab.local/package /var/www/weblab.local/public_html
-    
-    - name: Download file setup NVM
-      command: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-    
-    - name: Run setup nvm
-      command: source ~/.bashrc
+    - name: Install NVM dependencies
+      apt:
+        name:
+          - curl
+          - wget
+        state: present
 
-    - name: Setup Nodejs v18.16.0
-      command: nvm install v18.16.0 -y
+    - name: Download and install NVM
+      shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+      args:
+        executable: /bin/bash
+
+    - name: Load NVM into current shell session
+      shell: source ~/.bashrc
+      args:
+        executable: /bin/bash
+
+    - name: Install Node.js using NVM
+      shell: nvm install node
+      become: true
+      args:
+        executable: /bin/bash
 
     - name: npm install
       shell: npm install --force
