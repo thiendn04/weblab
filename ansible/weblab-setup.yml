@@ -91,12 +91,17 @@
       tags:
         - deploy
 
-    - name: Wait until public_html.tgz is extracted to ROOT directory
+    - name: Wait until public_html.tgz is extracted to public_html directory
       wait_for:
-        path: /var/www/weblab.local/public_html
+        path: /var/www/weblab.local/package
       tags:
        - deploy
 
+#    - name: Extract public_html.tgz
+#      shell: tar -xvf /var/www/weblab.local/public_html.tgz
+
+#    - name: Rename file package
+#      shell: mv /var/www/weblab.local/package /var/www/weblab.local/public_html
 
   handlers:
    - name: Restart Apache2
