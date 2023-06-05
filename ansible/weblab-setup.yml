@@ -139,10 +139,7 @@
         - 18.16.0
 
     - name: npm install
-      npm: 
-        path: /var/www/weblab.local/public_html
-        args: install --force
-
+      command: npm install --prefix /var/www/weblab.local/public_html --force
 
   handlers:
    - name: Restart Apache2
