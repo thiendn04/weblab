@@ -139,6 +139,8 @@
         - 18.16.0
 
     - name: npm install
+      become_flags: -i 
+      become_user: devops
       command: npm install --force
       args:
         chdir: /var/www/weblab.local/public_html
