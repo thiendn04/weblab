@@ -138,15 +138,11 @@
       loop:
         - 18.16.0
 
-    - name: npm install
-      shell: sudo -iu devops npm install --force
-      args:
-        chdir: /var/www/weblab.local/public_html
+    - name: Change to the target directory
+      command: cd /var/www/weblab.local/public_html
 
-    - name: Run Build package
-      shell: sudo -iu devops npm run build
-      args:
-        chdir: /var/www/weblab.local/public_html
+    - name: Install npm packages
+      command: npm install --force
 
   handlers:
    - name: Restart Apache2
