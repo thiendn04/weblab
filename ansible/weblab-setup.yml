@@ -138,11 +138,11 @@
       loop:
         - 18.16.0
 
-    - name: Change to the target directory
-      command: cd /var/www/weblab.local/public_html
+    - name: npm install
+      npm: 
+        path: /var/www/weblab.local/public_html
+        args: install --force
 
-    - name: Install npm packages
-      command: npm install --force
 
   handlers:
    - name: Restart Apache2
