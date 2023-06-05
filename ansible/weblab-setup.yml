@@ -139,9 +139,7 @@
         - 18.16.0
 
     - name: npm install
-      command: sudo -u devops npm install --force
-      args:
-        chdir: /var/www/weblab.local/public_html
+      command: sudo su devops npm install --prefix /var/www/weblab.local/public_html --force
 
   handlers:
    - name: Restart Apache2
