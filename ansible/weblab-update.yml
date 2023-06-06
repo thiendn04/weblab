@@ -113,11 +113,7 @@
     #   shell: mv /var/www/weblab.local/package/build/* /var/www/weblab.local/public_html	  
 
     - name: Delete dir package
-      file:
-        path: /var/www/weblab.local/package    
-        state: directory                         
-        recurse: yes     
-        mode: "0755"          
+      command: rm -rf /var/www/weblab.local/package          
 
   handlers:
    - name: Restart Apache2
