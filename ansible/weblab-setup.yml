@@ -58,7 +58,6 @@
 
     - name: Enable site
       command: a2ensite {{ http_conf }}
-      notify: restart-apache
 
     - name: Allow everything and enable UFW
       ufw:
@@ -86,8 +85,3 @@
 #    - name: change directory and install dependencies
 #      command: chdir=/var/www/weblab.local/public_html npm install --force
 
-  handlers:
-   - name: Restart Apache2
-     service:
-      name: Apache2
-      state: restarted
