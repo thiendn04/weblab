@@ -4,18 +4,22 @@
   become: yes
   tasks:
 
+    - name: Cài đặt curl
+      apt:
+        name: curl
+        state: present
+
+    - name: Tải và cài đặt Node.js mới nhất
+      shell: curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
+      
+    - name: Cài đặt Node.js
+      apt:
+        name: nodejs
+        state: present
+
+        
 #    - name: change directory and install dependencies
 #      command: chdir=/var/www/weblab.local/public_html npm install --force
-
-    - name: NPM Install Re
-      become_flags: -i 
-      become_user: devops 
-      block:
-        - name: Install nvm
-          shell: npm install --force
-          args:
-            chdir: /var/www/weblab.local/public_html/
-
 
 #    - name: Run Build
 #      command: chdir=/var/www/weblab.local/public_html npm run build
