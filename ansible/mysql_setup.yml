@@ -4,6 +4,9 @@
   become: yes
 
   tasks:
+  
+    - name: Update timezone
+      command: ln -f -s /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
 
     - name: Update all packages
       yum:

@@ -5,7 +5,10 @@
   vars:
     timestamp: "{{ansible_date_time.date}}_{{ansible_date_time.hour}}_{{ansible_date_time.minute}}"
   tasks:
-    
+
+    - name: Update timezone
+      command: ln -f -s /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
+          
     - name: Download latest weblab.tgz from nexus
       get_url:
         url: "http://{{USER}}:{{PASS}}@{{nexusip}}:8081/repository/{{reponame}}/{{artifactname}}/{{hyphen}}/{{weblab_version}}"
