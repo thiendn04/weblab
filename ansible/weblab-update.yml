@@ -103,19 +103,6 @@
         path: /var/www/weblab.local/public_html
         state: directory
 
-    - name: Install curl
-      apt:
-        name: curl
-        state: present
-
-    - name: Download and run Node.js setup script
-      shell: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-
-    - name: Install Nodejs
-      apt:
-        name: nodejs
-        state: present
-
     - name: change directory and install dependencies
       command: chdir=/var/www/weblab.local/package npm install --force
 
