@@ -86,3 +86,8 @@
 #    - name: change directory and install dependencies
 #      command: chdir=/var/www/weblab.local/public_html npm install --force
 
+  handlers:
+   - name: Restart Apache2
+     service:
+      name: Apache2
+      state: restarted
