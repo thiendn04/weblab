@@ -77,7 +77,12 @@
         port: "{{ item }}"
         proto: tcp
       loop:  "{{ ufw_port }}" 
-       
-    - name: change directory and install dependencies
-      command: chdir=/var/www/weblab.local/public_html npm install --force
+
+    - name: install node and npm
+      apt:
+        name: ['nodejs', 'npm']
+        state: present
+
+#    - name: change directory and install dependencies
+#      command: chdir=/var/www/weblab.local/public_html npm install --force
 
