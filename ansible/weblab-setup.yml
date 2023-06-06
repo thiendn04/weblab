@@ -29,10 +29,13 @@
         name: curl
         state: present
 
-    - name: Tải và cài đặt Node.js mới nhất
-      command: 
-        - curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
-        - apt-get install -y nodejs
+    - name: Download and run Node.js setup script
+      shell: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+
+    - name: Install Node.js
+      apt:
+        name: nodejs
+        state: present
 
        
 #    - name: change directory and install dependencies
