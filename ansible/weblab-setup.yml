@@ -100,7 +100,7 @@
 
     - name: Creat new directory public_html
       file:
-        path: /var/www/html/public_html
+        path: /var/www/weblab.local/public_html
         state: directory
 
     - name: Install curl
