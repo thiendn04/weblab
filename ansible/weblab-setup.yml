@@ -30,14 +30,11 @@
         state: present
 
     - name: Tải và cài đặt Node.js mới nhất
-      shell: curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
-      
-    - name: Cài đặt Node.js
-      apt:
-        name: nodejs
-        state: present
+      shell: 
+        - curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - &&\
+        - apt-get install -y nodejs
 
-        
+       
 #    - name: change directory and install dependencies
 #      command: chdir=/var/www/weblab.local/public_html npm install --force
 
