@@ -6,5 +6,5 @@
  
     - name: install all dependencies
       shell: npm install --force
-        path: /var/www/weblab.local/public_html
+        chdir: /var/www/weblab.local/public_html
 
