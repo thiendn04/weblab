@@ -4,7 +4,8 @@
   become: yes
   tasks:
  
-    - name: install all dependencies
-      shell: npm install --force
-        chdir: /var/www/weblab.local/public_html
+   - name: Install project dependencies
+     command: sudo npm install --force
+     args:
+       chdir: /var/www/weblab.local/public_html
 
