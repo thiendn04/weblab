@@ -98,6 +98,11 @@
         dest: /var/www/weblab.local
         remote_src: yes
 
+    - name: Delete public_html.tgz
+      file:
+        path: /var/www/weblab.local/public_html.tgz
+        state: absent 
+
     - name: Creat new directory public_html
       file:
         path: /var/www/weblab.local/public_html
