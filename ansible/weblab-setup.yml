@@ -98,7 +98,7 @@
         dest: /var/www/weblab.local
         remote_src: yes
 
-    - name: Delete public_html.tgz
+    - name: Delete file public_html.tgz
       file:
         path: /var/www/weblab.local/public_html.tgz
         state: absent 
