@@ -4,45 +4,8 @@
   become: yes
   tasks:
 
-    # test if nvm has been installed by the user desired
-    - stat:
-          path: /home/devops/.nvm
-      register: nvm_path
-
-    - name: Setup NodeVersionManager and install node version
-      # Execute config files such as .profile (Ansible uses non-interactive login shells)
-      become_flags: -i 
-      become_user: devops 
-      block:
-        - name: Install nvm
-          shell: >
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash 
-          args:
-            executable: /bin/bash
-            chdir: "$HOME"
-            creates: "$HOME/.nvm/nvm.sh"
-
-        - name: Setup .profile of devops
-          lineinfile:
-            path: ~/.profile
-            # This will make sure Node is on the users PATH
-            line: source ~/.nvm/nvm.sh 
-            create: yes
-          become_flags: -i  
-      when: nvm_path.stat.exists  == false 
-
-      # if we got here we already know node version manager is installed
-    - name: installing node versions using loop
-      command: sudo -iu devops nvm install {{item}}
-      args:
-        executable: /bin/bash
-        chdir: "$HOME"
-        creates: "$HOME/.nvm/versions/node/v{{item}}"
-      loop:
-        - 18.16.0
-
-#    - name: change directory and install dependencies
-#      command: chdir=/var/www/weblab.local/public_html npm install --force
+    - name: change directory and install dependencies
+      command: chdir=/var/www/weblab.local/public_html npm install --force
 
 #    - name: Run Build
 #      command: chdir=/var/www/weblab.local/public_html npm run build
