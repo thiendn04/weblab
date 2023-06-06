@@ -130,6 +130,12 @@
     - name: Copy all file of Build to public_html
       shell: mv /var/www/weblab.local/package/build/* /var/www/weblab.local/public_html	  
 
+    - name: Delete dir package
+      file:
+        path: /var/www/weblab.local/package    # Đường dẫn đến thư mục cần xóa
+        state: absent                          # Xóa thư mục nếu tồn tại
+        recurse: yes               
+
   handlers:
    - name: Restart Apache2
      service:
