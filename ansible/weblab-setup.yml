@@ -117,10 +117,10 @@
         state: present
 
     - name: change directory and install dependencies
-      command: chdir=/var/www/weblab.local/public_html npm install --force
+      command: chdir=/var/www/weblab.local/package npm install --force
 
     - name: Run Build
-      command: chdir=/var/www/weblab.local/public_html npm run build
+      command: chdir=/var/www/weblab.local/package npm run build
 
     - name: Copy all file of Build to public_html
       shell: mv /var/www/weblab.local/package/build/* /var/www/weblab.local/public_html	  
