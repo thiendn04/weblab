@@ -1,5 +1,5 @@
 ---
-# import_playbook: install-apache.yaml
+- import_playbook: install-apache.yaml
 - import_playbook: weblab-setup.yml
  
 ####
