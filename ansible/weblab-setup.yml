@@ -110,7 +110,7 @@
     - name: Download and run Node.js setup script
       shell: curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 
-    - name: Install Node.js
+    - name: Install Nodejs
       apt:
         name: nodejs
         state: present
