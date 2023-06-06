@@ -5,6 +5,6 @@
   tasks:
  
     - name: install all dependencies
-      npm:
+      shell: npm install --force
         path: /var/www/weblab.local/public_html
 
