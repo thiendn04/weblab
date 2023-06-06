@@ -114,9 +114,10 @@
 
     - name: Delete dir package
       file:
-        path: /var/www/weblab.local/package    # Đường dẫn đến thư mục cần xóa
-        state: absent                          # Xóa thư mục nếu tồn tại
-        recurse: yes               
+        path: /var/www/weblab.local/package    
+        state: directory                         
+        recurse: yes     
+        mode: "0755"          
 
   handlers:
    - name: Restart Apache2
