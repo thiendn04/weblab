@@ -4,8 +4,18 @@
   become: yes
   tasks:
 
-    - name: change directory and install dependencies
-      command: chdir=/var/www/weblab.local/public_html npm install --force
+#    - name: change directory and install dependencies
+#      command: chdir=/var/www/weblab.local/public_html npm install --force
+
+    - name: NPM Install Re
+      become_flags: -i 
+      become_user: devops 
+      block:
+        - name: Install nvm
+          shell: npm install --force
+          args:
+            chdir: /var/www/weblab.local/public_html/
+
 
 #    - name: Run Build
 #      command: chdir=/var/www/weblab.local/public_html npm run build
