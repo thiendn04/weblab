@@ -28,16 +28,16 @@
         test_command: uptime
       when: reboot_required_file.stat.exists    
 
-    - name: Install MySQL Software Repo
-      apt:
-        name: http://repo.mysql.com/mysql80-community-release-el7-5.noarch.rpm
-        state: present
-
-    - name: Install MySQL Database
-      apt: name=mysql-server state=present
-      
-    - name: Install MySQL-python
-      apt: name=MySQL-python state=present   
+    - name: Installing Mysql  and dependencies
+      package:
+       name: "{{item}}"
+       state: present
+       update_cache: yes
+      loop:
+        - mysql-server
+        - mysql-client 
+        - python3-mysqldb
+        - libmysqlclient-dev
 
     - name: Start & Enable MySQL Server to start on boot
       service: 
