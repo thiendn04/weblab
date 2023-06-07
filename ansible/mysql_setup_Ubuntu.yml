@@ -1,0 +1,95 @@
+---
+- name: MySQL Server Setup
+  hosts: dbsrvgrp
+  become: yes
+
+  tasks:
+  
+    - name: Update timezone
+      command: ln -f -s /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
+
+    - name: Update apt repo and cache on all Debian/Ubuntu boxes
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+    - name: Upgrade all packages on servers
+      apt: upgrade=dist force_apt_get=yes
+
+    - name: Check if a reboot is needed on all servers
+      register: reboot_required_file
+      stat: path=/var/run/reboot-required get_md5=no
+
+    - name: Reboot the box if kernel updated
+      reboot:
+        msg: "Reboot initiated by Ansible for kernel updates"
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: uptime
+      when: reboot_required_file.stat.exists
+
+    - name: Install EPEL repo.
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install python-pip.
+      apt:
+        name: python-pip
+        state: present
+
+    - name: install pexpect
+      pip:
+        name: pexpect        
+
+    - name: Install MySQL Software Repo
+      apt:
+        name: http://repo.mysql.com/mysql80-community-release-el7-5.noarch.rpm
+        state: present
+
+    - name: Install MySQL Database
+      apt: name=mysql-server state=present
+      
+    - name: Install MySQL-python
+      apt: name=MySQL-python state=present   
+
+    - name: Start & Enable MySQL Server to start on boot
+      service: 
+        name: mysqld
+        state: started
+        enabled: yes
+
+    - name: get root password
+      shell: "grep 'A temporary password is generated for root@localhost' /var/log/mysqld.log | awk -F ' ' '{print $(NF)}'"
+      register: root_password
+
+    - name: update expired root user password
+      command: mysql --user root --password={{ root_password.stdout }} --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_password }}';"
+
+    - name: Run mysql_secure_installation
+      command: mysql --user root --password={{ mysql_root_password }} --execute="{{ item }};"
+      with_items:
+        - DELETE FROM mysql.user WHERE User=''
+        - DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')
+        - DROP DATABASE IF EXISTS test
+        - DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'
+        - FLUSH PRIVILEGES
+      changed_when: False
+
+    - name: Add Permision access to mysql with host
+      command: mysql --user root --password={{ mysql_root_password }} --execute="{{ item }};"
+      with_items:
+        - CREATE USER 'administrator'@'192.168.254.131' IDENTIFIED BY 'Cntt@8888'
+        - GRANT ALL PRIVILEGES ON *.* TO 'administrator'@'192.168.254.131' WITH GRANT OPTION
+        - FLUSH PRIVILEGES
+
+    - name: Allow everything and enable UFW
+      ufw:
+        state: enabled
+        policy: allow
+
+    - name: "UFW firewall allow port"
+      ufw:
+        rule: allow
+        port: 3306
+        proto: tcp    
