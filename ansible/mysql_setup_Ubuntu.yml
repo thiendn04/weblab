@@ -76,8 +76,18 @@
         state: enabled
         policy: allow
 
-    - name: "UFW firewall allow port"
+
+    - name: Open ports in UFW
       ufw:
         rule: allow
-        port: 3306
-        proto: tcp    
+        port: "{{ item }}"
+        proto: tcp 
+      with_items:
+        - 22    # SSH
+        - 80    # HTTP
+        - 443   # HTTPS
+        - 3306  # MySQL
+
+    - name: Reload UFW
+      ufw:
+        state: reloaded 
