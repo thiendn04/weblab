@@ -41,16 +41,12 @@
 
     - name: Start & Enable MySQL Server to start on boot
       service: 
-        name: mysqld
+        name: mysql
         state: started
         enabled: yes
 
-    - name: get root password
-      shell: "grep 'A temporary password is generated for root@localhost' /var/log/mysqld.log | awk -F ' ' '{print $(NF)}'"
-      register: root_password
-
     - name: update expired root user password
-      command: mysql --user root --password={{ root_password.stdout }} --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_password }}';"
+      command: mysql --user root --password= --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_password }}';"
 
     - name: Run mysql_secure_installation
       command: mysql --user root --password={{ mysql_root_password }} --execute="{{ item }};"
