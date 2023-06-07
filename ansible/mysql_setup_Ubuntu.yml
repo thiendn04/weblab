@@ -65,6 +65,12 @@
         - GRANT ALL PRIVILEGES ON *.* TO 'administrator'@'192.168.254.131' WITH GRANT OPTION
         - FLUSH PRIVILEGES
 
+    - name: Search and edit file mysqld.cnf
+      replace:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '127.0.0.1'
+        replace: '0.0.0.0'
+
     - name: Allow everything and enable UFW
       ufw:
         state: enabled
