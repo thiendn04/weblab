@@ -46,7 +46,7 @@
         enabled: yes
 
     - name: update expired root user password
-      command: mysql --user root --password= --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_password }}';"
+      command: mysql --user root --password="" --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_password }}';"
 
     - name: Run mysql_secure_installation
       command: mysql --user root --password={{ mysql_root_password }} --execute="{{ item }};"
