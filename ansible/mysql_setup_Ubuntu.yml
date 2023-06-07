@@ -46,7 +46,7 @@
         enabled: yes
 
     - name: update expired root user password
-      command: mysql --user root --password="" --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_password }}';"
+      command: mysql --user root --password="" --execute="ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '{{ mysql_root_password }}';"
 
     - name: Run mysql_secure_installation
       command: mysql --user root --password={{ mysql_root_password }} --execute="{{ item }};"
@@ -70,6 +70,8 @@
         path: /etc/mysql/mysql.conf.d/mysqld.cnf
         regexp: '127.0.0.1'
         replace: '0.0.0.0'
+      notify:
+        - restart mysql
 
     - name: Allow everything and enable UFW
       ufw:
@@ -91,3 +93,9 @@
     - name: Reload UFW
       ufw:
         state: reloaded 
+
+  handlers:
+    - name: restart mysql
+      service:
+        name: mysql
+        state: restarted
