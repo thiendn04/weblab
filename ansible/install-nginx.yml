@@ -30,11 +30,18 @@
     #     state: present
 
 
-    - name: Remove lines starting with "#"
-      lineinfile:
-        path: /etc/nginx/nginx.conf
-        regexp: '^\s*#(\s*)server_names_hash_bucket_size\s+64;'
-        line: 'server_names_hash_bucket_size 64;'
+    # - name: Remove lines starting with "#"
+    #   lineinfile:
+    #     path: /etc/nginx/nginx.conf
+    #     regexp: '^\s*#(\s*)server_names_hash_bucket_size\s+64;'
+    #     line: 'server_names_hash_bucket_size 64;'
+
+    - name: Đọc nội dung tệp tin
+      shell: "/etc/nginx/nginx.conf"
+      register: file_content
+
+    - name: Xóa dấu thăng đầu dòng trong nội dung tệp tin
+      shell: "echo '{{ file_content.stdout_lines | join('\n') | regex_replace('^(\s*)#(\s*)server_names_hash_bucket_size\s+64;', '\\1\\2server_names_hash_bucket_size 64;') }}' > /etc/nginx/nginx.conf"
     # - name: Create document root for domain configured in host variable
     #   file:
     #     path: "/var/www/{{ http_host }}"
