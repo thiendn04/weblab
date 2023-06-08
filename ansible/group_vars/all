@@ -5,5 +5,7 @@ http_conf:  weblab.local.conf
 http_port:  "80"
 
 ufw_port: 
--  "22"
--  "443"
+- "22"    # SSH
+- "80"    # HTTP
+- "443"   # HTTPS
+- "Nginx Full"
