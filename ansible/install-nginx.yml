@@ -53,15 +53,14 @@
         src: "files/nginx-template.conf"
         dest: "/etc/nginx/sites-available/{{ http_conf }}"
 
+    - name: Bring your NGINX site live
+      command: ln -s /etc/nginx/sites-available/{{ http_conf }} /etc/nginx/sites-enabled/
+
     - name: Disable default Apache website
       command: "{{ item }}"
       loop:
         - unlink /etc/nginx/sites-enabled/default
         - unlink /etc/nginx/sites-enabled/example.com
-
-
-    - name: Bring your NGINX site live
-      command: ln -s /etc/nginx/sites-available/{{ http_conf }} /etc/nginx/sites-enabled/
       notify: Reload Nginx
 
     - name: Allow everything and enable UFW
@@ -176,13 +175,13 @@
   #       regexp: 'localhost'
   #       replace: '192.168.254.134'
 
-  # handlers:
+  handlers:
   #   - name: restart_php-fpm
   #     service:
   #       name: php8.1-fpm
   #       state: restarted
 
-  #   - name: Reload Nginx
-  #     service:
-  #       name: nginx
-  #       state: reloaded    
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded    
