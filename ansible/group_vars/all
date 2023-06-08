@@ -8,4 +8,4 @@ ufw_port:
 - "22"    # SSH
 - "80"    # HTTP
 - "443"   # HTTPS
-- "Nginx Full"
+
