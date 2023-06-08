@@ -35,7 +35,7 @@
         path: /etc/nginx/nginx.conf
         state: present
         regexp: '^# server_names_hash_bucket_size 64;$'
-        line: 'server_names_hash_bucket_size 64;'
+        replace: 'server_names_hash_bucket_size 64;'
     # - name: Create document root for domain configured in host variable
     #   file:
     #     path: "/var/www/{{ http_host }}"
