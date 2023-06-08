@@ -32,6 +32,7 @@
     - name: Remove lines starting with "#"
       lineinfile:
         path: /etc/nginx/nginx.conf
+        state: present
         regexp: '^(.*)# server_names_hash_bucket_size 64;'
         backrefs: yes
  
