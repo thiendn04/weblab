@@ -33,8 +33,8 @@
     - name: Remove lines starting with "#"
       lineinfile:
         path: /etc/nginx/nginx.conf
-        regexp: '^#\s*Hello Word'
-        line: 'Hello Word'
+        regexp: '^\s*#(\s*)server_names_hash_bucket_size\s+64;'
+        line: '^\s*(\s*)server_names_hash_bucket_size 64;'
     # - name: Create document root for domain configured in host variable
     #   file:
     #     path: "/var/www/{{ http_host }}"
