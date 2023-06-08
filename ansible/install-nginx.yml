@@ -34,8 +34,8 @@
       lineinfile:
         path: /etc/nginx/nginx.conf
         state: present
-        regexp: '^# server_names_hash_bucket_size 64;'
-        line: '\1'
+        regexp: '^(.*)# server_names_hash_bucket_size 64;'
+        backrefs: yes
     # - name: Create document root for domain configured in host variable
     #   file:
     #     path: "/var/www/{{ http_host }}"
