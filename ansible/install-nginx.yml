@@ -23,62 +23,62 @@
         test_command: uptime
       when: reboot_required_file.stat.exists
 
-    - name: Install Nginx
-      apt: 
-        name: nginx
-        update_cache: yes 
-        state: present
+    # - name: Install Nginx
+    #   apt: 
+    #     name: nginx
+    #     update_cache: yes 
+    #     state: present
 
     - name: Remove lines starting with "#"
-      replace:
+      lineinfile:
         path: /etc/nginx/nginx.conf
-        regexp: '^#.* server_names_hash_bucket_size 64;'
-        replace: ''
+        regexp: '^(.*)# server_names_hash_bucket_size 64;'
+        backrefs: yes
  
-    - name: Create document root for domain configured in host variable
-      file:
-        path: "/var/www/{{ http_host }}"
-        state: directory
-        owner: root
-        group: root
-        mode: '0755'
+    # - name: Create document root for domain configured in host variable
+    #   file:
+    #     path: "/var/www/{{ http_host }}"
+    #     state: directory
+    #     owner: root
+    #     group: root
+    #     mode: '0755'
 
-    - name: Creat directory BK
-      file:
-        path: "/var/www/{{ http_host }}/BK"
-        state: directory
+    # - name: Creat directory BK
+    #   file:
+    #     path: "/var/www/{{ http_host }}/BK"
+    #     state: directory
 
-    - name: Creat directory public_html
-      file:
-        path: "/var/www/{{ http_host }}/public_html"
-        state: directory    
+    # - name: Creat directory public_html
+    #   file:
+    #     path: "/var/www/{{ http_host }}/public_html"
+    #     state: directory    
 
-    - name: Set up Nginx
-      template:
-        src: "files/nginx-template.conf"
-        dest: "/etc/nginx/sites-available/{{ http_conf }}"
+    # - name: Set up Nginx
+    #   template:
+    #     src: "files/nginx-template.conf"
+    #     dest: "/etc/nginx/sites-available/{{ http_conf }}"
 
-    - name: Disable default Apache website
-      command: unlink /etc/nginx/sites-enabled/default
+    # - name: Disable default Apache website
+    #   command: unlink /etc/nginx/sites-enabled/default
 
-    # - name: Remove default nginx config from sites-enabled
-    #   file: name=/etc/nginx/sites-enabled/default state=absent
+    # # - name: Remove default nginx config from sites-enabled
+    # #   file: name=/etc/nginx/sites-enabled/default state=absent
 
-    - name: Bring your NGINX site live
-      command: ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
-      notify: Reload Nginx
+    # - name: Bring your NGINX site live
+    #   command: ln -s /etc/nginx/sites-available/{{ http_conf }} /etc/nginx/sites-enabled/
+    #   notify: Reload Nginx
 
-    - name: Allow everything and enable UFW
-      ufw:
-        state: enabled
-        policy: allow
+    # - name: Allow everything and enable UFW
+    #   ufw:
+    #     state: enabled
+    #     policy: allow
 
-    - name: "UFW firewall allow port"
-      ufw:
-        rule: allow
-        port: "{{ item }}"
-        proto: tcp
-      loop:  "{{ ufw_port }}" 
+    # - name: "UFW firewall allow port"
+    #   ufw:
+    #     rule: allow
+    #     port: "{{ item }}"
+    #     proto: tcp
+    #   loop:  "{{ ufw_port }}" 
 
   #   - name: Install Repository
   #     apt: 
@@ -180,13 +180,13 @@
   #       regexp: 'localhost'
   #       replace: '192.168.254.134'
 
-  handlers:
+  # handlers:
     # - name: restart_php-fpm
     #   service:
     #     name: php8.1-fpm
     #     state: restarted
 
-    - name: Reload Nginx
-      service:
-        name: nginx
-        state: reloaded    
+    # - name: Reload Nginx
+    #   service:
+    #     name: nginx
+    #     state: reloaded    
