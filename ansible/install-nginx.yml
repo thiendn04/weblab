@@ -57,10 +57,7 @@
       command: ln -s /etc/nginx/sites-available/{{ http_conf }} /etc/nginx/sites-enabled/
 
     - name: Disable default Apache website
-      command: "{{ item }}"
-      loop:
-        - unlink /etc/nginx/sites-enabled/default
-        - unlink /etc/nginx/sites-enabled/example.com
+      command: unlink /etc/nginx/sites-enabled/default
       notify: Reload Nginx
 
     - name: Allow everything and enable UFW
