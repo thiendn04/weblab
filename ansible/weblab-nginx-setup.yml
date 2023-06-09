@@ -136,4 +136,4 @@
    - name: Reload Nginx
      service:
       name: nginx
-      state: reload
+      state: reloaded
