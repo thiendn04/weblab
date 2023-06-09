@@ -1,6 +1,6 @@
 ---
 # - import_playbook: mysql_setup_Centos7.yml
-# - import_playbook: mysql_setup_Ubuntu.yml
+ - import_playbook: mysql_setup_Ubuntu.yml
 
 # - import_playbook: install-apache.yml
 # - import_playbook: weblab-setup.yml
@@ -8,4 +8,4 @@
  
 ####
 #With Nginx
-- import_playbook: install-nginx.yml
+#- import_playbook: install-nginx.yml
