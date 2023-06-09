@@ -9,4 +9,4 @@
 ####
 #With Nginx
 #- import_playbook: install-nginx.yml
-# - import_playbook: weblab-nginx-setup.yml
+- import_playbook: weblab-nginx-setup.yml
