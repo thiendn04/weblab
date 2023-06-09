@@ -28,7 +28,7 @@
         name: nginx
         update_cache: yes 
         state: present
-
+      notify: Reload Nginx
 
     - name: Create document root for domain configured in host variable
       file:
@@ -58,7 +58,7 @@
 
     - name: Disable default Apache website
       command: unlink /etc/nginx/sites-enabled/default
-      notify: Reload Nginx
+
 
     - name: Allow everything and enable UFW
       ufw:
