@@ -153,20 +153,10 @@
     - name: Rename file
       shell: mv /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
 
-    - name: Set up phpmyadmin directory.
-      template:
-        src: "files/directory.conf"
-        dest: "/etc/nginx/sites-enabled/directory.conf"
-      notify: 
-        -  restart_php-fpm
-
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-
     - name: Install python3-regex package
       apt:
         name: python3-regex
+        update_cache: yes
         state: present
 
     - name: Search and edit file config.inc.php
