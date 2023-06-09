@@ -72,6 +72,11 @@
         proto: tcp
       loop:  "{{ ufw_port }}" 
 
+    - name: Allow Nginx Full service in UFW
+      ufw:
+        rule: allow
+        app: "Nginx Full"    
+
     - name: Install Repository
       apt: 
         name:  software-properties-common
