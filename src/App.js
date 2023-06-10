@@ -48,6 +48,7 @@ function App() {
 
   return (
     <>
+      <h3><center>Chào mừng bạn đến với trang Todo App</center></h3>
       <h3>Danh sách cần làm ngày hôm nay:</h3>
       <Textfield
         name='add-todo'
