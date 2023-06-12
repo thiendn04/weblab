@@ -28,6 +28,7 @@ pipeline {
             steps {
                 nodejs(nodeJSInstallationName: 'NodeJS18.16.0'){
                 sh 'npm install --force'
+                sh 'npm run build'
                 }                
             }
         }
@@ -102,7 +103,7 @@ pipeline {
                     """					
 					
                     ansiblePlaybook(
-						credentialsId: 'app-stage-ssh-login',
+						credentialsId: 'weblab-staging-ssh-login',
 						disableHostKeyChecking: true,
                         colorized: true,
                         inventory: 'inventories/staging/hosts',
@@ -121,5 +122,10 @@ pipeline {
 		    }
 		}		
 	}
+    post {
+        always {
+            cleanWs deleteDirs: true
+        }
+    } 
 }
 
