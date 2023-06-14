@@ -33,7 +33,7 @@ pipeline {
                     echo 'Slack Notifications.'
                     slackSend channel: '#cicd-jenkins-lab',
                         color: '#FFFF00',
-                        message: "STARTED: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"            
+                        message: "*STARTED:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"            
                 }
             } 
         }
