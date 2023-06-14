@@ -33,7 +33,7 @@ pipeline {
                     echo 'Slack Notifications.'
                     slackSend channel: '#cicd-jenkins-lab',
                         color: '#FF0000',
-                        message: "*STARTED:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"            
+                        message: "*STARTED:* Job ${env.JOB_NAME} build #${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"            
                 }
             } 
         }
@@ -140,7 +140,7 @@ pipeline {
             echo 'Slack Notifications.'
             slackSend channel: '#cicd-jenkins-lab',
                 color: COLOR_MAP[currentBuild.currentResult],
-                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"            
+                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build #${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"            
         }
     } 
 }
